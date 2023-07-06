@@ -2,4 +2,13 @@
     <h1>
         User Profile
     </h1>
+  <ul>
+            <% for(let i of userList) { %> 
+                <li>
+                  <p><%= i.name %></p>
+                  <p><%= i.email %></>
+                   <p><%= i.password %></>
+                </li>
+            <% } %>
+        </ul> 
    
