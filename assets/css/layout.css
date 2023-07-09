@@ -1,6 +1,14 @@
-body{
-    margin:0px;
-    padding:0px;
-    box-sizing: border-box;
-    text-align: center;
+* {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+layout-main {
+  height: 100%;
 }

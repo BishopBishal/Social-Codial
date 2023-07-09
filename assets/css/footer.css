@@ -1,0 +1,9 @@
+footer {
+  font-size: 1.5rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: grey;
+  color: rgb(248, 245, 245);
+}

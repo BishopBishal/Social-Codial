@@ -1,29 +1,28 @@
-body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-form{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    
+input {
+  padding: 10px;
+  width: 30%;
+  margin-left: 35%;
+  border: none;
+  border-bottom: 1px solid #ccc;
 }
- 
-input{
-    padding: 10px;
-    width: 30%;
-    margin-left: 35%;
-    border: none;
-    border-bottom: 1px solid #ccc;
-}
-button{
-    width: 100px;
-    margin-left: 47%;
-    height: 40px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+
+button {
+  width: 100px;
+  margin-left: 47%;
+  height: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

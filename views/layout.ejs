@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <%- style %>
     <title>
         <%= title %>
@@ -11,7 +13,9 @@
 </head>
 <body>
     <%- include('__header'); %>
-    <%- body %>
+    <main class="layout-main">
+        <%- body %>
+    </main>
     <%- include('__footer'); %>
 
     <%- script %>

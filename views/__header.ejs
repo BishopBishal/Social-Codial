@@ -1,16 +1,24 @@
+
 <header>
-    Page Header
+    <div id="main-header">
+        <div id="title-header">Socials</div>
+    
+        <div id="list-header">
+            <ul>
+                <% if(locals.user){%>
+                 <li>
+                     <a href="/user/signout">SignOut</a>
+                 </li>
+                 <% } else {%>
+                     <li>
+                         <a href="/user/signin">SignIn</a>
+                         <a href="/user/signup">SignUp</a>
+                     </li>
+                     <% } %>
+             </ul>
+        </div>
+       
+    </div>
+   
 </header>
 
-<ul>
-   <% if(locals.user){%>
-    <li>
-        <a href="/user/signout">Sign Out</a>
-    </li>
-    <% } else {%>
-        <li>
-            <a href="/user/signin">Sign In</a>
-            <a href="/user/signup">Sing Up</a>
-        </li>
-        <% } %>
-</ul>
