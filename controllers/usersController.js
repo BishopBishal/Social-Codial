@@ -1,3 +1,4 @@
+const passport = require("passport");
 const User =require("../models/user");
 module.exports.profile=function(req, res){
     return res.render('userProfile',{title : 'ProfilePage'});
@@ -21,10 +22,6 @@ module.exports.signin=function(req, res){
 }
 
 module.exports.createUser=async function(req, res){
-    //Do it later
-    // console.log('createUser',req.body,'cookies:- ',req.cookies);
-    // res.cookie('user_id',25);
-
     try{
         if(req.body.email != req.body.confirmEmail)
         {
@@ -67,3 +64,4 @@ module.exports.signOut=function(req, res){
     });
     return res.redirect('/user/signin');
 };
+

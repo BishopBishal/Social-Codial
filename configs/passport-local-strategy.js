@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
+const Post = require('../models/post');
 
 //Authentication using passport
 passport.use(new LocalStrategy(
@@ -61,6 +62,7 @@ passport.setAuthenticatedUser= function(req,res,next)
     {
         //req contain the current user from the session cookie and we are just sending this to the local for the views
         res.locals.user = req.user;
+        
     }
     next();
 }
