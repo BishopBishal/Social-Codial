@@ -4,7 +4,14 @@ module.exports.home=async function (req,res){
   try{
       
      // console.log("value of user id:- "+req.user._id);
-      const post=await Post.find({}).populate('user').exec();
+      const post=await Post.find({}).populate('user')
+      .populate({
+        path:'comments',
+        populate:{
+          path:'user'
+        }
+      })
+      .exec();
       // console.log("post are :- "+post);
         return  res.render('home',{title:'HomePage',Post:post});
 
