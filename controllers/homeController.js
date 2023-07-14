@@ -13,8 +13,9 @@ module.exports.home=async function (req,res){
         }
       })
       .exec();
+      const allUsers=await User.find({});
       // console.log("post are :- "+post);
-        return  res.render('home',{title:'HomePage || Codial',Post:post});
+        return  res.render('home',{title:'HomePage || Codial',Post:post,allUsers:allUsers});
 
   }catch(err)
   {

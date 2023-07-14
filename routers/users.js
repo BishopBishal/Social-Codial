@@ -5,7 +5,7 @@ const passport = require('passport');
 
 const usersController = require("../controllers/usersController");
 
-router.get('/profile',passport.checkAuthentication,usersController.profile);
+router.get('/profile/:id',passport.checkAuthentication,usersController.profile);
 
 router.get('/signup',usersController.signup);
 
@@ -21,5 +21,7 @@ router.post('/create-session',passport.authenticate(
 
 
 router.get('/signout',usersController.signOut);
+
+router.post('/update-user/:id',usersController.updateUser);
 
 module.exports =router;
