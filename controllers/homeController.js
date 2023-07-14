@@ -1,5 +1,6 @@
 const Post = require("../models/post");
-
+const Comment = require('../models/comments');
+const User = require("../models/user");
 module.exports.home=async function (req,res){
   try{
       
@@ -13,7 +14,7 @@ module.exports.home=async function (req,res){
       })
       .exec();
       // console.log("post are :- "+post);
-        return  res.render('home',{title:'HomePage',Post:post});
+        return  res.render('home',{title:'HomePage || Codial',Post:post});
 
   }catch(err)
   {
@@ -22,5 +23,7 @@ module.exports.home=async function (req,res){
   }
   
 }
+
+
 
 //module.exports.actionName=function (req,res){ return res.end("<h1>Action</h1>");}

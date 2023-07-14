@@ -2,7 +2,7 @@ const passport = require("passport");
 const User =require("../models/user");
 module.exports.profile=function(req, res){
     return res.render('userProfile',{title : 'ProfilePage'});
-}
+};
 
 
 module.exports.signup=function(req, res){
@@ -11,7 +11,7 @@ module.exports.signup=function(req, res){
         return res.redirect('/user/profile');
     }
     return res.render('userSignup',{title : 'Codial | Signup Page'});
-}
+};
 
 module.exports.signin=function(req, res){
     if(req.isAuthenticated())
@@ -19,7 +19,7 @@ module.exports.signin=function(req, res){
         return res.redirect('/user/profile');
     }
     return res.render('userSignin',{title : 'Codial | Signin Page'});
-}
+};
 
 module.exports.createUser=async function(req, res){
     try{

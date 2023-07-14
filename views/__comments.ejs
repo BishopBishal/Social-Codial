@@ -1,0 +1,12 @@
+<li>
+    <p>
+      <%= comment.content %>
+      <% if(locals.user && locals.user.id ==  comment.user.id){ %> 
+        <a href="/comment/delete-comment/<%=comment.id%>"><i class="fa fa-times-circle"></i></a>
+        <%}%>
+      <br>
+      <small>
+        <%= comment.user.name %>
+      </small>
+    </p>
+  </li>

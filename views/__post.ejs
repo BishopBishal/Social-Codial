@@ -1,0 +1,30 @@
+<div id="post-section">
+    <ul>
+      <p>  <% Post.forEach(function(post) { %>
+        <li><%=post.content%> 
+          <% if(locals.user && locals.user.id ==  post.user.id){ %> 
+            <a href="/post/delete-post/<%=post.id%>"><i class="fa fa-times-circle"></i></a>
+            <%}%>
+          </li>
+        <small><%= post.user.name%></small>
+        <div id="comment-section">
+            <% if(locals.user) { %>
+              <form action="/comment/create-comment" method="post">
+                <input type="text" name="content" id="comment" placeholder="Type your comment here ..." required>
+                <input type="hidden" name="post" value="<%= post._id %>">
+                <button type="submit">Add Comment</button>
+              </form>
+              <% } %>
+        
+              <div id="post-comment-list">
+                <ul id="post-comment-<%= post._id %>">
+                    <% for (comment of post.comments) { %>
+                        <%- include('__comments'); %>
+                        <%}%>
+                </ul>
+              </div>
+          </div>
+      <% }); %>
+    </p>
+      </ul>
+</div> 
