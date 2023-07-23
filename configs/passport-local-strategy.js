@@ -6,21 +6,24 @@ const Post = require('../models/post');
 //Authentication using passport
 passport.use(new LocalStrategy(
     {
-        usernameField:'email'
+        usernameField:'email',
+        passReqToCallback:true
     },
-    async function(email,password,done) {
+    async function(req,email,password,done) {
        try {
         //finding the user and stablish its identity
             const user = await User.findOne({email: email});
             console.log('user found', user,password);
              if(!user || user.password != password) {
                 console.log('Invalid password');
+                req.flash('error','Invalid Username/Password');
                 return done(null,false);
             } 
             return done(null,user);
         }
         catch (err) {
             console.error('Error finding is user --> Passport',err);
+            req.flash('error','Error finding is user --> Passport'+err);
             return done(err);
         }
     }

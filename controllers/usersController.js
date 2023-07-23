@@ -38,6 +38,7 @@ module.exports.createUser=async function(req, res){
     try{
         if(req.body.email != req.body.confirmEmail)
         {
+            req.flash('error','Confirmation email does not match with email');
             console.log('Confirmation email does not match with email',req.body);   
             return res.redirect('back');
         }
@@ -47,38 +48,45 @@ module.exports.createUser=async function(req, res){
         if(newUser == null)
         {
             const newCreatedUser=await User.create(req.body);
+            req.flash('success','User successfully created');
             console.log('Created user',newCreatedUser);
                 return res.redirect('/user/signin');
         }
         else{
+            req.flash('error','User already exists');
             console.log('Duplicate Entry... You can make only one user with one emailId !!!');
             return res.redirect('back');
         }
     }
     catch(err)
     {
+        req.flash('error','Internal Server Error');
         return  res.status(500).send("Internal Server Error",err);
     }
 };
 
 module.exports.createSession=function(req, res){
     console.log('createSession',req.body);
+    req.flash('success','Logged In Successfully');
     let redirectPath='/user/profile/'+req.user.id;
     console.log(redirectPath);
     return res.redirect(redirectPath);
 };
 
-module.exports.signOut=function(req, res){
-    req.logout(function(err){
-        if(err)
-        {
-            console.log('error happened while signing out',err);
-            return ;
-        }
-        console.log("successfully logout");
-    });
-    return res.redirect('/user/signin');
-};
+module.exports.signOut = function(req, res) {
+    req.flash('success', 'Logged Out Successfully');
+    req.logout(function(err) {
+            if (err) {
+              console.log("Error happpend on sign out",err);
+              req.flash('error', 'Error occurred while signing out ' + err);
+            } else {
+              req.flash('success', 'Logged Out Successfully');
+            }});
+            return res.redirect('/user/signin');
+        };
+  
+
+
 
 module.exports.updateUser =async function(req, res){
     try{
@@ -87,15 +95,18 @@ module.exports.updateUser =async function(req, res){
         {
             const oldUser =await User.findByIdAndUpdate(req.params.id,req.body);
             console.log("user updated successfully " + oldUser);
+            req.flash=('success','User has been updated successfully');
             return res.redirect('back');
         }
         else
         {
+            req.flash('error', 'You are not allowed to Update this user');
             console.log("UnAuthorized user is trying to update",req.user.id,req.params.id);
             return res.status(401).send('Unauthorized User');
         }
     }
     catch(err){
+        req.flash('error', 'error while updating user');
         console.log('error while updating user',err);
         return res.redirect('back');
     }

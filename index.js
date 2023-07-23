@@ -8,7 +8,8 @@ const session= require('express-session');
 const passport = require('passport');
 const passportLocal = require('./configs/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session);
-
+const flash = require('connect-flash');
+const flashMiddleWare=require('./configs/middleware');
 
 const app = express();
 const port = 8000;
@@ -47,7 +48,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
-
+app.use(flash());
+app.use(flashMiddleWare.flash);
 
 //settup express routers    
 app.use('/',require('./routers/index'));

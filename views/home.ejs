@@ -4,20 +4,31 @@
     <section id="feed-post">
         <h2>Wall Of Fame !!!</h2>
         <% if(locals.user) { %>
-        <form action="/post/create-post" id="new-form-post" method="post">
-            <textarea name="content"  cols="30" rows="3" placeholder="Type Here ..."></textarea>
-            <Button type="submit">Post</Button>
-        </form>
-        <% } %>
-        <%- include('__post'); %>
+            <form action="/post/create-post" id="new-form-post" method="post">
+                <textarea name="content" cols="30" rows="3" placeholder="Type Here ..."></textarea>
+                <Button type="submit">Post</Button>
+            </form>
+            <% } %>
+                <div id="post-section">
+                    <ul>
+                        <p>
+                            <% for (post of PostList) { %>
+                                <%- include('__post'); %>
+                                    <%}%>
+                        </p>
+                    </ul>
+                </div>
     </section>
-    
+
     <section id="user-friends">
         <h4>FRIENDS</h4>
         <% for(friend of allUsers){ %>
-                <p>
-                    <a href="/user/profile/<%= friend.id %>"><%= friend.name %></a>
-                </p>
+            <p>
+                <a href="/user/profile/<%= friend.id %>">
+                    <%= friend.name %>
+                </a>
+            </p>
             <%}%>
     </section>
 </div>
+<script src="/js/home_post.js"></script>

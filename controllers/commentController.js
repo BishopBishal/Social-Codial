@@ -15,11 +15,14 @@ module.exports.createComment =async function(req,res){
             });
            post.comments.push(newComment);
            post.save();
+           req.flash('success','New Comment has been Added');
            return res.redirect('/');
         }
+        req.flash('error',"Can't Add Comment to this Post");
         console.log("Can't find post with id " + req.body.post.id);
         return res.redirect('back');
     }catch(err){
+        req.flash('error',"Error creating comment");
         console.error("Error creating comment",err);
         return res.redirect('back');
     }
@@ -32,15 +35,19 @@ module.exports.destroyComment =async function(req, res){
         if(req.user.id == comment.user && comment ){
             await Comment.findByIdAndDelete(comment.id);
             await Post.findByIdAndUpdate(comment.post,{ $pull : {comments :req.params.id}});
+            req.flash('success',"Comment has been Deleted");
             return res.redirect('back');
         }
         else
         {
+            req.flash('error',"Can't Delete Comment to this Post");
             console.log('comment is null or empty', comment.user,' or the user id does not match with comment id -->',req.user.id);
             return res.redirect('back');
         }
     }catch(err)
     {
+        req.flash('error',"Error deleting the comment");
         console.error("Error deleting the comment",err);
+        return res.redirect('back');
     }
 };

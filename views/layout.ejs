@@ -1,24 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
     <%- style %>
-    <title>
-        <%= title %>
-    </title>
+        <title>
+            <%= title %>
+        </title>
 </head>
+
 <body>
     <%- include('__header'); %>
-    <main class="layout-main">
-        <%- body %>
-    </main>
-    <%- include('__footer'); %>
 
-    <%- script %>
+        <main class="layout-main">
+            <%- body %>
+        </main>
+        <%- include('__footer'); %>
+
+            <%- script %>
+                <script>
+        <% if (locals.flash.success && locals.flash.success.length > 0) { %>
+                        new Noty({
+                            theme: 'relax',
+                            text: "<%=locals.flash.success%>",
+                            type: "success",
+                            layout: "topRight",
+                            timeout: 1500
+                        }).show();
+        
+        <%}%>
+    <% if (locals.flash.error && locals.flash.error.length > 0) { %>
+                        new Noty({
+                            theme: 'relax',
+                            text: "<%=locals.flash.error%>",
+                            type: "error",
+                            layout: "topRight",
+                            timeout: 1500
+                        }).show();
+        <%}%>
+                </script>
+
 </body>
+
 </html>
