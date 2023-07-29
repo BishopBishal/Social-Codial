@@ -5,6 +5,7 @@ const { request } = require('express');
 
 module.exports.createPost = async function (req, res) {
   try {
+    console.log('Data type of post:', typeof req.body.content);
     const newPost = await Post.create({
       content: req.body.content,
       user: req.user._id,
