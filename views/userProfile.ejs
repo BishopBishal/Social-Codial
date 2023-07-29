@@ -1,17 +1,23 @@
-    <link rel="stylesheet" href="/css/userProfile.css">
-    <h1>
-        User Profile
-    </h1>
-    <% if(user.id == profileUser.id) { %> 
-        <form action="/user/update-user/<%=profileUser.id%>" method="post">
-            <input type="text" name="name" placeholder="Your Name" value="<%=profileUser.name%>" required>
-            <input type="email" name="email" placeholder="Your email" value="<%=profileUser.email%>" required>
-            <button type="submit">update</button>
-        </form>
-        <% } else{ %>
-            <p><%= profileUser.email %> </p>
-            <p><%= profileUser.name %> </p>
-            <p><%= profileUser.password %> </p>
-            <%} %>
-   
-   
+<link rel="stylesheet" href="/css/userProfile.css">
+<h1>
+    User Profile
+</h1>
+<img src="<%= user.avatar %>" width="100" alt="<%= user.name %>">
+<% if(user.id==profileUser.id) { %>
+    <form action="/user/update-user/<%=profileUser.id%>" enctype="multipart/form-data" method="post">
+        <input type="text" name="name" placeholder="Your Name" value="<%=profileUser.name%>" required>
+        <input type="email" name="email" placeholder="Your email" value="<%=profileUser.email%>" required>
+        <input type="file" name="avatar" placeholder="Profile Picture">
+        <button type="submit">update</button>
+    </form>
+    <% } else{ %>
+        <p>
+            <%= profileUser.email %>
+        </p>
+        <p>
+            <%= profileUser.name %>
+        </p>
+        <p>
+            <%= profileUser.password %>
+        </p>
+        <%} %>
