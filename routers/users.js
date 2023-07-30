@@ -5,23 +5,28 @@ const passport = require('passport');
 
 const usersController = require("../controllers/usersController");
 
-router.get('/profile/:id',passport.checkAuthentication,usersController.profile);
+router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
 
-router.get('/signup',usersController.signup);
+router.get('/signup', usersController.signup);
 
-router.get('/signin',usersController.signin);
+router.get('/signin', usersController.signin);
 
-router.post('/create-user',usersController.createUser);
+router.post('/create-user', usersController.createUser);
 
 //use passport as a middleware for authentications
-router.post('/create-session',passport.authenticate(
+router.post('/create-session', passport.authenticate(
     'local',
-    {failureRedirect:'/user/signin'}
-),usersController.createSession);
+    { failureRedirect: '/user/signin' }
+), usersController.createSession);
 
 
-router.get('/signout',usersController.signOut);
+router.get('/signout', usersController.signOut);
 
-router.post('/update-user/:id',usersController.updateUser);
+router.post('/update-user/:id', usersController.updateUser);
 
-module.exports =router;
+
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/user/signin' }), usersController.createSession);
+
+
+module.exports = router;

@@ -2,7 +2,7 @@
 <h1>
     User Profile
 </h1>
-<img src="<%= user.avatar %>" width="100" alt="<%= user.name %>">
+<img src="<%= profileUser.avatar %>" width="100" alt="<%= profileUser.name %>">
 <% if(user.id==profileUser.id) { %>
     <form action="/user/update-user/<%=profileUser.id%>" enctype="multipart/form-data" method="post">
         <input type="text" name="name" placeholder="Your Name" value="<%=profileUser.name%>" required>
