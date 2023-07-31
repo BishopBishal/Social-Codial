@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Codial Comment Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: #007bff;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .india-theme {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            max-width: 120px;
+            opacity: 0.8;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .content p {
+            margin: 0 0 15px;
+        }
+
+        .content strong {
+            color: #007bff;
+        }
+
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        .signature p {
+            margin: 5px 0;
+            color: #888;
+        }
+
+        /* Animation */
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animated-fade-in {
+            animation: fade-in 1.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container animated-fade-in">
+        <div class="header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfQD3RxuyJy8y5acTntsJcglyRIBlZ2kiBWAu9hZkfV6W6wSJaYtlyNcOlGfU8y5P1pv8&usqp=CAU"
+                alt="India Theme" class="india-theme">
+            <h1>Hello <%= comment.user.name %>,</h1>
+        </div>
+        <div class="content">
+            <p>Your Comment <strong>
+                    <%= comment.content %>
+                </strong> has just been published on Codial.</p>
+            <p>Share your thoughts with the world!</p>
+        </div>
+        <div class="signature">
+            <p>Thanks & Regards,</p>
+            <p>Codials Team</p>
+        </div>
+    </div>
+</body>
+
+</html>

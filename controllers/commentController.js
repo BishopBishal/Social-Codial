@@ -1,5 +1,10 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post');
+const commentMailer = require('../mailers/comments_mailers');
+const User = require('../models/user');
+const queue = require('../configs/kue');
+const commentEmailWorker = require('../workers/comment_email_worker');
+
 
 module.exports.createComment = async function (req, res) {
     try {
@@ -17,6 +22,23 @@ module.exports.createComment = async function (req, res) {
             post.comments.push(newComment);
             post.save();
             console.log('new comment:- ', newComment);
+            await Comment.populate(newComment, { path: 'user' });
+            console.log('new user.email :- ', newComment);
+
+            //Adding Delayed job to send email notification
+
+            let job = queue.create('email', newComment).save(function (err) {
+                if (err) {
+                    console.log('Error hapended while adding job to queue:- ', err);
+                    return;
+                }
+
+                console.log('Job added to queue:- ', job._id);
+            });
+
+
+            // Sending email using commentMailer
+            // commentMailer.newComment(newComment);
             if (req.xhr) {
                 // console.log('XHR Request Data:', newCommentForm.serialize());
                 return res.status(200).json({
