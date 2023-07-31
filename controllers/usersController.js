@@ -1,7 +1,11 @@
 const passport = require("passport");
 const User = require("../models/user");
+const ForgetPassword = require('../models/forgetPassword');
+const crypto = require('crypto');
 const fs = require("fs");
 const path = require("path");
+const queue = require('../configs/kue');
+const forgetPasswordMailer = require('../workers/forget_password_worker');
 
 
 
@@ -123,4 +127,86 @@ module.exports.updateUser = async function (req, res) {
         console.log('error while updating user', err);
         return res.redirect('back');
     }
+};
+
+
+module.exports.forgetPassword = function (req, res) {
+    return res.render('forgetPassword', { title: 'Forget Password' });
+}
+
+module.exports.confirmEmail = async function (req, res) {
+    try {
+        console.log('form body data', req.body);
+        if (req.body.email == req.body.confirm_email) {
+            const oldUser = await User.findOne({ email: req.body.email });
+            console.log('old user', oldUser);
+            if (oldUser) {
+                const forgetPassword = await ForgetPassword.create({
+                    accessToken: crypto.randomBytes(20).toString('hex'),
+                    isVaild: true,
+                    user: oldUser._id
+                });
+                await ForgetPassword.populate(forgetPassword, { path: 'user' });
+                console.log('forgot password  instance has been created', forgetPassword);
+                let job = queue.create('forgetPassword', forgetPassword).save(function (err) {
+                    if (err) {
+                        console.log('Error hapended while adding job to queue:- ', err);
+                        return;
+                    }
+
+                    console.log('Job added to queue:- ', job._id);
+                });
+
+                return res.redirect('back');
+
+            }
+            return res.redirect('back');
+        }
+
+    }
+    catch (err) {
+        console.log('Error occured while trying to Forget Password', err);
+        return res.redirect('back');
+    }
+};
+
+
+module.exports.resetPassword = async function (req, res) {
+    try {
+        console.log('query param for reset password', req.query.accesstoken);
+        const oldForgetPasswordUser = await ForgetPassword.findOne({ accessToken: req.query.accesstoken });
+        const oldForgetPasswordUserduplicate = oldForgetPasswordUser;
+        await ForgetPassword.populate(oldForgetPasswordUser, { path: 'user' });
+        console.log('oldForgetPassword user :- ', oldForgetPasswordUser);
+        if (oldForgetPasswordUser && oldForgetPasswordUser.isVaild == true) {
+            await ForgetPassword.findByIdAndDelete(oldForgetPasswordUserduplicate._id);
+            return res.render('changePassword', { oldUser: oldForgetPasswordUser, title: 'Social Change Password' });
+        }
+
+        return res.render('InvalidSignIn', { title: 'Social Change Password', message: 'Token Expired or User not found' });
+    }
+    catch (err) {
+        console.log('Error occured while validating or reseting the password', err);
+        return res.render('InvalidSignIn', { title: 'Social Change Password', message: 'Error Occured While Reseting Password' });
+    }
+};
+
+
+module.exports.changePassword = async function (req, res) {
+    try {
+        console.log('changePassword query param found:- ' + req.body);
+        const oldUser = await User.findById(req.body.userid);
+        console.log('Old User found in changePassword:- ', oldUser);
+        if (oldUser) {
+            oldUser.password = req.body.password;
+            oldUser.save();
+            console.log('Password changed successfully', oldUser);
+            res.redirect('/user/signin');
+        }
+    }
+    catch (err) {
+        console.log('Error occured while changing the password ', err);
+        return res.redirect('/user/signin');
+    }
+
 };

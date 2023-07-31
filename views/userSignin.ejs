@@ -3,8 +3,15 @@
 <form action="/user/create-session" method="post">
     <input type="email" name="email" id="email" placeholder="Enter your Email id" required>
     <input type="password" name="password" id="password" placeholder="Enter your password" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Login</button>
 </form>
-<p>
-    <a href="/user/auth/google">Google SignIn/SignUp</a>
-</p>
+<h5>OR</h5>
+<form action="/user/auth/google" id="google-login" method="get">
+    <button type="submit"><span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x" style="color: #fbbc05;"></i>
+            <i class="fa fa-google fa-stack-1x" style="color: #4285F4;"></i>
+        </span>Login with Google</button>
+</form>
+<form action="/user/forgetPassword" id="forget-login" method="get">
+    <button type="submit"><i class="fa fa-search"></i>ForgetPassword</button>
+</form>
